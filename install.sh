@@ -38,7 +38,7 @@ apt-get -y install libjson-perl libjson-any-perl libjson-xs-perl
 apt-get -y install binutils-dev genisoimage syslinux
 
 # Prepare the git buildweb repository
-mkdir -p /var/www && cd /var/www && git clone https://github.com/xbgmsharp/ipxe-buildweb.git
+mkdir -p /var/www && cd /var/www && git clone https://github.com/halo11009/ipxe-buildweb.git
 cd /var/www/ipxe-buildweb
 cp parseheaders.pl /var/tmp/ipxe/src/util/
 
@@ -59,7 +59,11 @@ EOF
 
 cat << EOF > /etc/apache2/mods-enabled/fcgid.conf
 <IfModule mod_fcgid.c>
-    FcgidConnectTimeout 20
+    FcgidConnectTimeout 120
+    IdleTimeout 3600
+    BusyTimeout 300
+    IPCCommTimeout 360
+    MaxRequestLen 15728640
     <IfModule mod_mime.c>
         AddHandler fcgid-script .fcgi
     </IfModule>
